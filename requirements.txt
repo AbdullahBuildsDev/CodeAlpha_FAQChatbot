@@ -1,0 +1,6 @@
+# Smart semantic chatbot - all free & open-source, runs locally.
+sentence-transformers>=2.2   # AI embeddings for semantic search (model downloads once)
+gradio>=4.0                  # smooth web chat UI
+nltk>=3.8                    # optional NLP preprocessing for the TF-IDF fallback
+# If sentence-transformers is not installed, the bot falls back to the pure-Python
+# TF-IDF engine in chatbot.py automatically.
