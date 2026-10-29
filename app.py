@@ -50,7 +50,7 @@ footer {display:none !important;}
 theme = gr.themes.Soft(primary_hue="indigo", secondary_hue="purple",
                        radius_size="lg", font=["Inter", "system-ui", "sans-serif"])
 
-with gr.Blocks(theme=theme, css=CSS, title="CodeAlpha · Smart Chatbot") as demo:
+with gr.Blocks(title="CodeAlpha · Smart Chatbot") as demo:
     gr.HTML(f"""
       <div id='hero'>
         <h1>🧠 CodeAlpha Smart Assistant</h1>
@@ -60,12 +60,11 @@ with gr.Blocks(theme=theme, css=CSS, title="CodeAlpha · Smart Chatbot") as demo
 
     gr.ChatInterface(
         fn=respond,
-        type="messages",
         chatbot=gr.Chatbot(value=[{"role": "assistant", "content": GREETING}],
-                           type="messages", height=440, show_label=False),
+                           height=440, show_label=False),
         examples=EXAMPLES,
         submit_btn="Send",
     )
 
 if __name__ == "__main__":
-    demo.launch(inbrowser=True)
+    demo.launch(inbrowser=True, theme=theme, css=CSS)
