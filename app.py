@@ -15,24 +15,29 @@ from src.engine import SmartAssistant
 
 BOT = SmartAssistant()
 
-GREETING = ("Hi! 👋 I'm the CodeAlpha smart assistant. Ask me anything about the "
-            "internship — applying, tasks, certificates, submission, and more.")
+GREETING = ("Hi! 👋 I'm the CodeAlpha assistant. I know the tasks for **all** "
+            "CodeAlpha courses — AI, Machine Learning, Python, Full Stack, DevOps, "
+            "Data Analytics, Cyber Security & Cloud Computing — plus general "
+            "internship questions. Ask me anything about your course!")
 
 EXAMPLES = [
-    "What is this internship about?",
+    "What are the Machine Learning tasks?",
+    "Tell me about the Python Programming tasks",
+    "What should I build for Cyber Security?",
+    "Data Analytics project ideas",
     "How do I apply?",
-    "Is it paid or free?",
     "How many tasks do I need to complete?",
-    "Can I submit my project on Google Drive?",
-    "What do I get after completing it?",
 ]
 
 
 def respond(message, history):
-    answer, score, _ = BOT.answer(message)
-    # Add a subtle confidence note.
-    bar = "🟢" if score >= 0.6 else ("🟡" if score >= 0.4 else "🟠")
-    return f"{answer}\n\n<sub>{bar} confidence {score:.0%}</sub>"
+    answer, score, source = BOT.answer(message)
+    # Add a subtle confidence note + the source document when the answer
+    # came from one of the uploaded course PDFs.
+    bar = "🟢" if score >= 0.5 else ("🟡" if score >= 0.25 else "🟠")
+    src = f" · 📄 {source.split(':', 1)[1].strip()}" \
+        if source.startswith("Document:") else ""
+    return f"{answer}\n\n<sub>{bar} confidence {score:.0%}{src}</sub>"
 
 
 CSS = """

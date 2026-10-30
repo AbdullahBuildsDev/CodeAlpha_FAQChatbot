@@ -2,5 +2,6 @@
 sentence-transformers>=2.2   # AI embeddings for semantic search (model downloads once)
 gradio>=4.0                  # smooth web chat UI
 nltk>=3.8                    # optional NLP preprocessing for the TF-IDF fallback
+pypdf>=4.0                   # read PDFs dropped in data/documents/ (RAG)
 # If sentence-transformers is not installed, the bot falls back to the pure-Python
-# TF-IDF engine in chatbot.py automatically.
+# TF-IDF engine automatically - PDFs work in either mode.

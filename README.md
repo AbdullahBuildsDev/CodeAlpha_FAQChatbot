@@ -8,13 +8,15 @@ and each user question is matched to the most semantically similar passage using
 falls back to a pure-Python **TF-IDF** engine, so it always works.
 
 ## ✨ Features
-- Loads Q&A pairs from an easy-to-edit `faqs.json`
-- NLP preprocessing with **NLTK** (tokenizing + stopword removal)
-- **TF-IDF + cosine similarity** matching (implemented in pure Python)
+- **📄 Chat with your documents** — drop any PDFs into `data/documents/` and the
+  bot reads them on startup and answers from their content (a mini **RAG** system)
+- Semantic matching with **sentence-transformers** embeddings, with an automatic
+  pure-Python **TF-IDF** fallback (PDFs work in either mode)
+- Knowledge from `data/knowledge.md`, `data/faqs.json`, **and** your PDFs
+- Shows the **source document** for every PDF-based answer
 - Confidence score for every answer
-- A friendly **chat UI** built with Tkinter
-- Also runs from the command line (`python chatbot.py`)
-- Graceful fallback if NLTK data isn't downloaded — it always works
+- A polished **web chat UI** (Gradio) with suggested questions
+- Graceful fallback if a model/library isn't installed — it always works
 
 ## 🛠️ Tech Stack
 - **Python 3**
@@ -61,7 +63,8 @@ CodeAlpha_FAQChatbot/
 │   └── tfidf_engine.py # Pure-Python TF-IDF fallback engine
 ├── data/
 │   ├── knowledge.md    # Knowledge base passages
-│   └── faqs.json       # Questions & answers (edit to add your own)
+│   ├── faqs.json       # Questions & answers (edit to add your own)
+│   └── documents/      # 📄 drop PDFs here — the bot reads & answers from them
 ├── requirements.txt    # Dependencies
 ├── LICENSE
 └── README.md
