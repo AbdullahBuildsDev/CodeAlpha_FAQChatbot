@@ -97,7 +97,10 @@ class SmartAssistant:
             self.model = SentenceTransformer("all-MiniLM-L6-v2")
             self.embeddings = self.model.encode(self.texts, convert_to_tensor=True,
                                                 normalize_embeddings=True)
-            self.threshold = 0.35
+            # Tuned on the course corpus: real in-scope questions score >=0.28,
+            # off-topic ones (weather, cooking, ...) stay well below, so this
+            # cleanly separates "answer it" from "ask to rephrase".
+            self.threshold = 0.28
         except Exception:
             self.mode = "tf-idf (fallback)"
             self.threshold = 0.12
