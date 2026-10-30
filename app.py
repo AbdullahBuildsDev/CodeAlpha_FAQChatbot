@@ -42,16 +42,17 @@ def respond(message, history):
 
 CSS = """
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap');
-.gradio-container{
-  --body-background-fill:#06100c; --background-fill-primary:#06100c;
-  --background-fill-secondary:rgba(255,255,255,.03);
-  --block-background-fill:rgba(255,255,255,.035);
-  --block-border-color:rgba(16,185,129,.16); --border-color-primary:rgba(16,185,129,.16);
-  --body-text-color:#e6f4ee; --body-text-color-subdued:#8ba89b;
-  --button-primary-background-fill:linear-gradient(92deg,#10b981,#14b8a6);
-  --button-primary-background-fill-hover:linear-gradient(92deg,#34d399,#2dd4bf);
-  --button-primary-text-color:#04140d; --button-primary-border-color:transparent;
-  --input-background-fill:rgba(255,255,255,.04); --block-radius:16px;
+.gradio-container, .gradio-container.dark{
+  --body-background-fill:#06100c !important; --background-fill-primary:#06100c !important;
+  --background-fill-secondary:rgba(255,255,255,.03) !important;
+  --block-background-fill:rgba(255,255,255,.035) !important;
+  --block-border-color:rgba(16,185,129,.16) !important; --border-color-primary:rgba(16,185,129,.16) !important;
+  --body-text-color:#e6f4ee !important; --body-text-color-subdued:#8ba89b !important;
+  --button-primary-background-fill:linear-gradient(92deg,#10b981,#14b8a6) !important;
+  --button-primary-background-fill-hover:linear-gradient(92deg,#34d399,#2dd4bf) !important;
+  --button-primary-text-color:#04140d !important; --button-primary-border-color:transparent !important;
+  --input-background-fill:rgba(255,255,255,.04) !important; --input-border-color:rgba(16,185,129,.16) !important;
+  --block-radius:16px !important; --block-label-text-color:#a3c4b6 !important;
   font-family:'Inter',system-ui,sans-serif !important; max-width:880px !important; margin:auto !important;}
 body{background:
   radial-gradient(900px 500px at 82% -12%, rgba(20,184,166,.14), transparent 60%),
@@ -81,6 +82,20 @@ footer{display:none !important;}
 
 theme = gr.themes.Base(primary_hue="emerald", neutral_hue="slate")
 
+# Force dark mode regardless of the visitor's system light/dark setting
+# (Gradio reads ?__theme=dark; this redirect sets it before the page renders).
+HEAD = """
+<script>
+(function(){
+  var u = new URL(window.location);
+  if (u.searchParams.get('__theme') !== 'dark') {
+    u.searchParams.set('__theme','dark');
+    window.location.replace(u.toString());
+  }
+})();
+</script>
+"""
+
 with gr.Blocks(title="CodeAlpha · Smart Chatbot") as demo:
     gr.HTML(f"""
       <div id='hero'>
@@ -98,4 +113,4 @@ with gr.Blocks(title="CodeAlpha · Smart Chatbot") as demo:
     )
 
 if __name__ == "__main__":
-    demo.launch(inbrowser=True, theme=theme, css=CSS)
+    demo.launch(inbrowser=True, theme=theme, css=CSS, head=HEAD)
